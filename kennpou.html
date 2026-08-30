@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本国憲法 重要語句確認テスト</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --correct: #16a34a;
+      --incorrect: #dc2626;
+      --correct-bg: #dcfce7;
+      --incorrect-bg: #fee2e2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    button.tab-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    button.tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .meta-info {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      background: #f1f5f9;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .target-blank {
+      font-weight: bold;
+      color: var(--primary);
+      background: #e0e7ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      padding: 14px 18px;
+      text-align: left;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .option-btn.correct {
+      background-color: var(--correct-bg);
+      border-color: var(--correct);
+      color: var(--correct);
+      font-weight: bold;
+    }
+
+    .option-btn.incorrect {
+      background-color: var(--incorrect-bg);
+      border-color: var(--incorrect);
+      color: var(--incorrect);
+    }
+
+    .feedback {
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: var(--correct-bg);
+      color: #14532d;
+    }
+
+    .feedback.incorrect {
+      background: var(--incorrect-bg);
+      color: #7f1d1d;
+    }
+
+    .next-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+
+    .next-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* 一覧テーブル */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result-summary {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .score-large {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 16px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>日本国憲法 重要語句テスト (全50問)</h1>
+    <div class="nav-buttons">
+      <button class="tab-btn active" id="tab-quiz" onclick="switchView('quiz')">テスト演習</button>
+      <button class="tab-btn" id="tab-list" onclick="switchView('list')">解答一覧</button>
+    </div>
+  </header>
+
+  <div id="quiz-view">
+    <div class="card" id="quiz-card">
+      <div class="meta-info" id="q-category">前文</div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+      </div>
+      <div class="meta-info" id="q-counter">問題 1 / 50</div>
+      
+      <div class="question-text" id="q-text"></div>
+      <div class="options-grid" id="options"></div>
+
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題へ</button>
+    </div>
+
+    <div class="card hidden result-summary" id="result-card">
+      <h2>演習完了！</h2>
+      <div class="score-large" id="final-score">50 / 50</div>
+      <p id="result-msg" style="margin-bottom: 24px; color: var(--text-muted);"></p>
+      <button class="next-btn" style="display:inline-block; max-width: 250px;" onclick="restartQuiz()">最初からやり直す</button>
+    </div>
+  </div>
+
+  <div id="list-view" class="card hidden">
+    <h2>全50問の解答・条文対照一覧</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 12%;">番号</th>
+          <th style="width: 25%;">条文</th>
+          <th style="width: 35%;">正解語句</th>
+          <th style="width: 28%;">語群の記号</th>
+        </tr>
+      </thead>
+      <tbody id="answer-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const quizData = [
+  { id: 1, section: "前文", context: "日本国民は、正当に選挙された【①】における代表者を通じて行動し...", answer: "国会", symbol: "す", distractors: ["内閣", "裁判所", "国民"] },
+  { id: 2, section: "前文", context: "...政府の行為によつて再び【②】が起ることのないやうにすることを決意し...", answer: "戦争の惨禍", symbol: "ら", distractors: ["武力の行使", "軍備の拡張", "国家の破綻"] },
+  { id: 3, section: "前文", context: "...ここに【③】が国民に存することを宣言し、この憲法を確定する。", answer: "主権", symbol: "と", distractors: ["最高権力", "統治権", "自由"] },
+  { id: 4, section: "第1条", context: "天皇は、日本国の【④】であり日本国民統合の【④】であつて...", answer: "象徴", symbol: "し", distractors: ["元首", "代表者", "統率者"] },
+  { id: 5, section: "第3条", context: "天皇の国事に関するすべての行為には、【⑤】を必要とし、内閣が、その責任を負ふ。", answer: "内閣の助言と承認", symbol: "ひ", distractors: ["国会の指名", "最高裁の同意", "内閣の指示"] },
+  { id: 6, section: "第6条", context: "天皇は、国会の指名に基いて内閣総理大臣を【⑥】し、内閣の指名に基いて最高裁判所の長たる裁判官を【⑥】する。", answer: "任命", symbol: "せ", distractors: ["指名", "罷免", "承認"] },
+  { id: 7, section: "第9条第1項", context: "日本国民は、正義と秩序を基調とする国際平和を誠実に希求し、【⑦】と...", answer: "国権の発動たる戦争", symbol: "ま", distractors: ["自衛のための戦争", "軍備の行使", "他国への侵略"] },
+  { id: 8, section: "第9条第1項", context: "...【⑧】は、国際紛争を解決する手段としては、永久にこれを放棄する。", answer: "武力による威嚇又は武力の行使", symbol: "や", distractors: ["軍事力の行使", "交戦権の保有", "同盟軍の配備"] },
+  { id: 9, section: "第9条第2項", context: "前項の目的を達するため、【⑨】は、これを保持しない。", answer: "陸海空軍その他の戦力", symbol: "め", distractors: ["自衛隊", "核兵器", "常備軍"] },
+  { id: 10, section: "第9条第2項", context: "...国の【⑩】は、これを認めない。", answer: "交戦権", symbol: "ほ", distractors: ["自衛権", "統治権", "宣戦権"] },
+  { id: 11, section: "第11条", context: "国民は、すべて【⑪】を妨げられない。", answer: "基本的人権の享有", symbol: "よ", distractors: ["自由権の行使", "参政権の確保", "平等の享受"] },
+  { id: 12, section: "第11条", context: "この憲法が保障する基本的人権は、【⑫】として、現在及び将来の国民に与へられる。", answer: "侵すことのできない永久の権利", symbol: "ん", distractors: ["公共の福祉による権利", "法律で定める権利", "生得の自然権"] },
+  { id: 13, section: "第12条", context: "国民は、これを濫用してはならないのであつて、常に【⑬】のためにこれを利用する責任を負ふ。", answer: "公共の福祉", symbol: "れ", distractors: ["国家の安全", "社会の秩序", "共同体の利益"] },
+  { id: 14, section: "第14条第1項", context: "すべて国民は、【⑭】であつて、人種、信条、性別、社会的身分又は門地により...差別されない。", answer: "法の下に平等", symbol: "な", distractors: ["機会の均等", "生まれながらに平等", "権利の享有"] },
+  { id: 15, section: "第15条第2項", context: "すべて公務員は、【⑮】であつて、一部の奉仕者ではない。", answer: "全体の奉仕者", symbol: "ゆ", distractors: ["国民の代表", "国家の公僕", "行政の担い手"] },
+  { id: 16, section: "第19条", context: "思想及び【⑯】の自由は、これを侵してはならない。", answer: "良心", symbol: "に", distractors: ["信教", "表現", "学問"] },
+  { id: 17, section: "第24条第1項", context: "婚姻は、【⑰】にのみ基いて成立し、夫婦が同等の権利を有することを基本として...", answer: "両性の合意", symbol: "ろ", distractors: ["家族の同意", "個人の尊厳", "戸籍の届出"] },
+  { id: 18, section: "第24条第2項", context: "婚姻及び家族に関するその他の事項に関しては、法律は、【⑱】と...", answer: "個人の尊厳", symbol: "た", distractors: ["基本的人権", "幸福追求権", "家族の自立"] },
+  { id: 19, section: "第24条第2項", context: "...【⑱】と【⑲】に立脚して、制定されなければならない。", answer: "両性の本質的平等", symbol: "む", distractors: ["法の下の平等", "夫婦の同権", "機会の均等"] },
+  { id: 20, section: "第25条第1項", context: "すべて国民は、【⑳】を営む権利を有する。", answer: "健康で文化的な最低限度の生活", symbol: "わ", distractors: ["自立した人間らしい生活", "幸福で豊かな生活", "生存権に基づく生活"] },
+  { id: 21, section: "第25条第2項", context: "国は、すべての生活部面について、【㉑】、【㉒】及び【㉓】の向上及び増進に努めなければならない。(1つ目)", answer: "社会福祉", symbol: "て", distractors: ["学校教育", "公衆衛生", "地域医療"] },
+  { id: 22, section: "第25条第2項", context: "国は、すべての生活部面について、【㉑】、【㉒】及び【㉓】の向上及び増進に努めなければならない。(2つ目)", answer: "社会保障", symbol: "へ", distractors: ["生活保護", "雇用均等", "最低賃金"] },
+  { id: 23, section: "第25条第2項", context: "国は、すべての生活部面について、【㉑】、【㉒】及び【㉓】の向上及び増進に努めなければならない。(3つ目)", answer: "公衆衛生", symbol: "A", distractors: ["環境保全", "国民福祉", "労働条件"] },
+  { id: 24, section: "第26条第1項", context: "すべて国民は、法律の定めるところにより、その保護する子女に【㉔】を負ふ。", answer: "普通教育を受けさせる義務", symbol: "F", distractors: ["教育を受ける権利", "勤労の義務", "扶養の義務"] },
+  { id: 25, section: "第27条第1項", context: "すべて国民は、【㉕】の権利を有し、義務を負ふ。", answer: "勤労", symbol: "つ", distractors: ["納税", "教育", "労働"] },
+  { id: 26, section: "第28条", context: "勤労者の【㉖】する権利及び...", answer: "団結", symbol: "の", distractors: ["ストライキ", "団体行動", "団体交渉"] },
+  { id: 27, section: "第28条", context: "...【㉗】その他の【㉘】をする権利は、これを保障する。(1つ目)", answer: "団体交渉", symbol: "を", distractors: ["団結", "政治活動", "労働組合結成"] },
+  { id: 28, section: "第28条", context: "...【㉗】その他の【㉘】をする権利は、これを保障する。(2つ目)", answer: "団体行動", symbol: "D", distractors: ["ストライキ", "請願行動", "政治活動"] },
+  { id: 29, section: "第30条", context: "国民は、法律の定めるところにより、【㉙】の義務を負ふ。", answer: "納税", symbol: "ち", distractors: ["勤労", "教育", "服従"] },
+  { id: 30, section: "第33条", context: "何人も、現行犯として逮捕される場合を除いては、権限を有する司法官憲が発し...【㉚】によらなければ、逮捕されない。", answer: "令状", symbol: "け", distractors: ["告訴状", "判決文", "召喚状"] },
+  { id: 31, section: "第41条", context: "国会は、【㉛】であつて、国の【㉜】である。(1つ目)", answer: "国権の最高機関", symbol: "み", distractors: ["国の唯一の立法機関", "国民の代表機関", "行政府の監督機関"] },
+  { id: 32, section: "第41条", context: "国会は、【㉛】であつて、国の【㉜】である。(2つ目)", answer: "唯一の立法機関", symbol: "も", distractors: ["国権の最高機関", "行政の統括機関", "司法の監督機関"] },
+  { id: 33, section: "第45条", context: "衆議院議員の任期は、【㉝】年とする。", answer: "4", symbol: "い", distractors: ["3", "5", "6"] },
+  { id: 34, section: "第46条", context: "参議院議員の任期は、【㉞】年とし...", answer: "6", symbol: "う", distractors: ["4", "5", "3"] },
+  { id: 35, section: "第46条", context: "...【㉟】年ごとに議員の半数を改選する。", answer: "3", symbol: "あ", distractors: ["2", "4", "6"] },
+  { id: 36, section: "第54条第1項", context: "衆議院が解散されたときは...総選挙を行ひ、その選挙の日から【㊱】日以内に、国会を召集しなければならない。", answer: "30", symbol: "お", distractors: ["10", "40", "60"] },
+  { id: 37, section: "第59条第2項", context: "...法律案は、衆議院で【㊲】の3分の2以上の多数で再び可決したときは、法律となる。", answer: "出席議員", symbol: "H", distractors: ["総議員", "過半数", "在任議員"] },
+  { id: 38, section: "第64条第1項", context: "国会は、罷免の訴追を受けた裁判官を裁判するため、両議院の議員で組織する【㊳】を設ける。", answer: "弾劾裁判所", symbol: "さ", distractors: ["最高裁判所", "憲法裁判所", "司法審査会"] },
+  { id: 39, section: "第66条第2項", context: "内閣総理大臣その他の国務大臣は、【㊴】でなければならない。", answer: "文民", symbol: "ぬ", distractors: ["国会議員", "成年の国民", "一般人"] },
+  { id: 40, section: "第68条第1項", context: "内閣総理大臣は、国務大臣を任命する。但し、その【㊵】は、国会議員の中から選ばれなければならない。", answer: "過半数", symbol: "は", distractors: ["3分の2以上", "全員", "総議員"] },
+  { id: 41, section: "第69条", context: "内閣は、衆議院で不信任の決議案を可決...したときは、【㊶】日以内に衆議院が解散されない限り、総辞職をしなければならない。", answer: "10", symbol: "え", distractors: ["20", "30", "40"] },
+  { id: 42, section: "第69条", context: "...10日以内に衆議院が解散されない限り、【㊷】をしなければならない。", answer: "総辞職", symbol: "り", distractors: ["内閣改造", "解散請求", "国会報告"] },
+  { id: 43, section: "第76条第3項", context: "すべて裁判官は、その良心に従ひ【㊸】してその職権を行ひ、この憲法及び法律にのみ拘束される。", answer: "独立", symbol: "E", distractors: ["忠実", "公平", "公正"] },
+  { id: 44, section: "第79条第2項", context: "最高裁判所の裁判官の任命は、その任命後初めて行はれる衆議院議員総選挙の際【㊹】に付し...", answer: "国民の審査", symbol: "B", distractors: ["国民投票", "国会の承認", "弾劾裁判"] },
+  { id: 45, section: "第94条", context: "地方公共団体は...法律の範囲内で【㊺】を制定することができる。", answer: "条例", symbol: "そ", distractors: ["規則", "地方法", "政令"] },
+  { id: 46, section: "第96条第1項", context: "この憲法の改正は、各議院の【㊻】の3分の2以上の賛成で、国会が、これを発議し...", answer: "総議員", symbol: "G", distractors: ["出席議員", "有権者", "過半数"] },
+  { id: 47, section: "第96条第1項", context: "...各議院の総議員の3分の2以上の賛成で、国会が、これを【㊼】し...", answer: "発議", symbol: "こ", distractors: ["議決", "公布", "承認"] },
+  { id: 48, section: "第96条第1項", context: "...この承認には、特別の【㊽】又は国会の定める選挙の際行はれる投票において...", answer: "国民投票", symbol: "C", distractors: ["国民の審査", "世論調査", "住民投票"] },
+  { id: 49, section: "第96条第1項", context: "...特別の国民投票又は国会の定める選挙の際行はれる投票において、その【㊾】の賛成を必要とする。", answer: "過半数", symbol: "は", distractors: ["3分の2以上", "総議員", "有効投票数の3分の1"] },
+  { id: 50, section: "第98条第1項", context: "この憲法は、国の【50】であつて、その条規に反する法律、命令...は、その効力を有しない。", answer: "最高法規", symbol: "る", distractors: ["根本法", "基本法規", "統治基本書"] }
+];
+
+let currentIndex = 0;
+let score = 0;
+let hasAnswered = false;
+
+function initQuiz() {
+  currentIndex = 0;
+  score = 0;
+  showQuestion();
+  renderAnswerTable();
+}
+
+function showQuestion() {
+  hasAnswered = false;
+  const q = quizData[currentIndex];
+  
+  document.getElementById("q-category").textContent = q.section;
+  document.getElementById("q-counter").textContent = `問題 ${currentIndex + 1} / ${quizData.length}`;
+  document.getElementById("progress").style.width = `${((currentIndex) / quizData.length) * 100}%`;
+  
+  // テキストの空欄ハイライト
+  const formattedText = q.context.replace(/【(.*?)】/, '<span class="target-blank">【$1】</span>');
+  document.getElementById("q-text").innerHTML = formattedText;
+
+  // 選択肢生成（正解 + 誤答3つをシャッフル）
+  const options = [q.answer, ...q.distractors].sort(() => Math.random() - 0.5);
+  const optionsContainer = document.getElementById("options");
+  optionsContainer.innerHTML = "";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = opt;
+    btn.onclick = () => selectOption(btn, opt, q.answer);
+    optionsContainer.appendChild(btn);
+  });
+
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback";
+  feedback.innerHTML = "";
+  document.getElementById("next-btn").style.display = "none";
+}
+
+function selectOption(selectedBtn, selectedOpt, correctOpt) {
+  if (hasAnswered) return;
+  hasAnswered = true;
+
+  const buttons = document.querySelectorAll(".option-btn");
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correctOpt) {
+      btn.classList.add("correct");
+    }
+  });
+
+  const feedback = document.getElementById("feedback");
+  const q = quizData[currentIndex];
+
+  if (selectedOpt === correctOpt) {
+    score++;
+    selectedBtn.classList.add("correct");
+    feedback.className = "feedback show correct";
+    feedback.innerHTML = `<strong>正解！</strong> （記号: 【${q.symbol}】）`;
+  } else {
+    selectedBtn.classList.add("incorrect");
+    feedback.className = "feedback show incorrect";
+    feedback.innerHTML = `<strong>不正解...</strong> 正解は「<strong>${correctOpt}</strong>」（記号: 【${q.symbol}】）です。`;
+  }
+
+  document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex < quizData.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("quiz-card").classList.add("hidden");
+  document.getElementById("result-card").classList.remove("hidden");
+  document.getElementById("final-score").textContent = `${score} / ${quizData.length}`;
+  
+  const percent = (score / quizData.length) * 100;
+  let msg = "";
+  if (percent === 100) msg = "完璧です！明日のテストは満点間違いなし！";
+  else if (percent >= 80) msg = "高得点！間違えた箇所だけ一覧で再確認しましょう！";
+  else msg = "もう一周解いて、数字や語句の定着を図りましょう！";
+  
+  document.getElementById("result-msg").textContent = msg;
+}
+
+function restartQuiz() {
+  document.getElementById("result-card").classList.add("hidden");
+  document.getElementById("quiz-card").classList.remove("hidden");
+  initQuiz();
+}
+
+function renderAnswerTable() {
+  const tbody = document.getElementById("answer-table-body");
+  tbody.innerHTML = "";
+  quizData.forEach(item => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>(${item.id})</td>
+      <td>${item.section}</td>
+      <td><strong>${item.answer}</strong></td>
+      <td>${item.symbol}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function switchView(tab) {
+  if (tab === 'quiz') {
+    document.getElementById("quiz-view").classList.remove("hidden");
+    document.getElementById("list-view").classList.add("hidden");
+    document.getElementById("tab-quiz").classList.add("active");
+    document.getElementById("tab-list").classList.remove("active");
+  } else {
+    document.getElementById("quiz-view").classList.add("hidden");
+    document.getElementById("list-view").classList.remove("hidden");
+    document.getElementById("tab-quiz").classList.remove("active");
+    document.getElementById("tab-list").classList.add("active");
+  }
+}
+
+window.onload = initQuiz;
+</script>
+</body>
+</html>
